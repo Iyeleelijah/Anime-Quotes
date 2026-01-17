@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'widgets/glowing_text.dart';
 import 'data/categories.dart';
+import 'screens/qoute_screen.dart';
+import 'data/models/quotes.dart';
+import 'data/models/quotes_by_category.dart';
+
 
 void main() {
   runApp(const AnimeQuoteApp());
@@ -65,11 +69,30 @@ child: GridView.builder(
   final category = categories[index];
   final imagePath = category['image']!;
 
+
+
   return InkWell(
     borderRadius: BorderRadius.circular(22),
+
+ // navigate to quotes screen with quotes for selected category
     onTap: () {
-      // later: navigate to quotes screen
+      final categoryId = category['id']!;
+      final quotes =
+       quotesByCategory[categoryId] ?? const <Quote>[];
+     
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => QuoteScreen(
+            categoryId: categoryId,
+            quotes: quotes,
+          ),
+        ),
+      );  
     },
+
+
     child: ClipRRect(
       borderRadius: BorderRadius.circular(22),
       child: Stack(
