@@ -47,8 +47,7 @@ assets/
 ├── aot.png
 
 ├── jujutsu.png
-![Uploading file_00000000a384720a9a85f3d4bd5b4d48.png…]()
-![Uploading file_00000000a384720a9a85f3d4bd5b4d48.png…]()
+
 ![Screenshot_2026-01-17-04-00-29-428_com example anime_verse_quotes](https://github.com/user-attachments/assets/65493a4f-3c10-45c2-8e8e-a505f91aa62b)
 <img width="1024" height="1024" alt="file_00000000a384720a9a85f3d4bd5b4d48" src="https://github.com/user-attachments/assets/7a187ec7-58d5-470f-a3e5-c7f81cbcc60b" />
 
