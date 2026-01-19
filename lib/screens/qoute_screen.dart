@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/quotes.dart';
+import '../ads/banner_ad_widget.dart';
+import '../ads/interstitisl_ad_manager.dart';
 
 class QuoteScreen extends StatefulWidget {
   final String categoryId;
@@ -23,6 +25,9 @@ class QuoteScreen extends StatefulWidget {
 class _QuoteScreenState extends State<QuoteScreen> {
   int index = 0;
   bool isFav = false;
+  final _interstitial = InterstitialAdManager();
+  int _nextTapCount = 0;
+  static const int _showAdEvery = 4; // show every 6 Next taps (good UX)
 
   LinearGradient get _bgGradient => const LinearGradient(
     colors: [Color(0xFF12091F), Color(0xFF1B0F2E), Color(0xFF2A1846)],
@@ -37,6 +42,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
   @override
   void initState() {
     super.initState();
+    _interstitial.load();
     _loadFav();
   }
 
@@ -53,9 +59,12 @@ class _QuoteScreenState extends State<QuoteScreen> {
   }
 
   void _next() {
-    if (index < widget.quotes.length - 1) {
-      setState(() => index++);
-      _loadFav();
+    setState(() => index = (index + 1) % widget.quotes.length);
+    _loadFav();
+
+    _nextTapCount++;
+    if (_nextTapCount % _showAdEvery == 0) {
+      _interstitial.showIfReady();
     }
   }
 
@@ -64,6 +73,12 @@ class _QuoteScreenState extends State<QuoteScreen> {
       setState(() => index--);
       _loadFav();
     }
+  }
+
+  @override
+  void dispose() {
+    _interstitial.dispose();
+    super.dispose();
   }
 
   Future<void> _copy() async {
@@ -203,6 +218,27 @@ class _QuoteScreenState extends State<QuoteScreen> {
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const BannerAdWidget(),
+                const SizedBox(height: 18),
+                Opacity(
+                  opacity: 0.55,
+                  child: Column(
+                    children: const [
+                      Text(
+                        "Developed by Cadman Dev Studio",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 11, color: Colors.white),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "© 2026 Cadman Dev Studio. All rights reserved.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                    ],
                   ),
                 ),
               ],
