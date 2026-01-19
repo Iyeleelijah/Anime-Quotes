@@ -58,3 +58,7 @@ build/
 linux/flutter/generated_*
 windows/flutter/generated_*
 macos/Flutter/GeneratedPluginRegistrant.*swift
+#flutter generated  registrant files
+**/flutter/generated_plugin_registrant.dart.*
+**/flutter/generated_plugin.cmake
+**/flutter/generated_plugins.swift
